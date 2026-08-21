@@ -41,6 +41,9 @@ public class PlayerWeapon : MonoBehaviour
 
         // Move the target point to the mouse position in 3D space.
         MoveTargetPoint();
+
+        // Aim the lasers toward the target point.
+        AimLasers();
     }
 
     private void MoveTargetPoint()
@@ -60,6 +63,24 @@ public class PlayerWeapon : MonoBehaviour
 
         // Move our target point to that world position.
         targetPoint.position = worldPosition;
+    }
+
+    private void AimLasers()
+    {
+        // Aim each laser individually at the target point.
+        foreach (ParticleSystem laser in weaponParticles)
+        {
+            // Direction from the laser to the target.
+            Vector3 fireDirection =
+                targetPoint.position - laser.transform.position;
+
+            // Convert the direction into a rotation.
+            Quaternion rotationToTarget =
+                Quaternion.LookRotation(fireDirection);
+
+            // Rotate the laser toward the target.
+            laser.transform.rotation = rotationToTarget;
+        }
     }
 
     public void OnFire(InputValue value)
