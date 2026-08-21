@@ -3,26 +3,25 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField] private float moveSpeed = 5f;
+
+    private Vector2 moveInput;
+
+    private void Update()
+    {
+        Vector3 localPosition = transform.localPosition;
+
+        localPosition.x += moveInput.x * moveSpeed * Time.deltaTime;
+        localPosition.y += moveInput.y * moveSpeed * Time.deltaTime;
+
+        localPosition.x = Mathf.Clamp(localPosition.x, -20f, 20f);
+        localPosition.y = Mathf.Clamp(localPosition.y, -13f, 13f);
+
+        transform.localPosition = localPosition;
+    }
+
     public void OnMove(InputValue value)
     {
-        Vector2 moveInput = value.Get<Vector2>();
-
-        if (moveInput == Vector2.zero)
-        {
-            Debug.Log("Currently not moving");
-            return;
-        }
-
-        if (moveInput.y > 0)
-            Debug.Log("Currently going UP");
-
-        if (moveInput.y < 0)
-            Debug.Log("Currently going DOWN");
-
-        if (moveInput.x > 0)
-            Debug.Log("Currently going RIGHT");
-
-        if (moveInput.x < 0)
-            Debug.Log("Currently going LEFT");
+        moveInput = value.Get<Vector2>();
     }
 }
