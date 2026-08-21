@@ -3,7 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerWeapon : MonoBehaviour
 {
+    [SerializeField] private RectTransform crosshair;
+
     private ParticleSystem[] weaponParticles;
+
+    void Start()
+    {
+        Cursor.visible = false;
+    }
 
     void Awake()
     {
@@ -16,6 +23,15 @@ public class PlayerWeapon : MonoBehaviour
             var emission = particle.emission;
             emission.enabled = false;
         }
+    }
+
+    void Update()
+    {
+        // Get mouse position in screen space.
+        Vector2 mousePosition = Mouse.current.position.ReadValue();
+
+        // Move the crosshair to the mouse position.
+        crosshair.position = mousePosition;
     }
 
     public void OnFire(InputValue value)
