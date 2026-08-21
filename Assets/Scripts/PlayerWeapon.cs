@@ -3,21 +3,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerWeapon : MonoBehaviour
 {
-    [SerializeField] private ParticleSystem weaponParticles;
-
-    private ParticleSystem.EmissionModule emission;
+    private ParticleSystem[] weaponParticles;
 
     void Awake()
     {
-        // Finds the Particle System anywhere underneath this object.
-        if (weaponParticles == null)
-        {
-            weaponParticles = GetComponentInChildren<ParticleSystem>();
-        }
+        // Find all Particle Systems under this object.
+        weaponParticles = GetComponentsInChildren<ParticleSystem>();
 
-        if (weaponParticles != null)
+        // Turn both laser emissions off initially.
+        foreach (ParticleSystem particle in weaponParticles)
         {
-            emission = weaponParticles.emission;
+            var emission = particle.emission;
             emission.enabled = false;
         }
     }
@@ -25,6 +21,12 @@ public class PlayerWeapon : MonoBehaviour
     public void OnFire(InputValue value)
     {
         bool isFiring = value.isPressed;
-        emission.enabled = isFiring;
+
+        // Toggle emission for both lasers.
+        foreach (ParticleSystem particle in weaponParticles)
+        {
+            var emission = particle.emission;
+            emission.enabled = isFiring;
+        }
     }
 }
