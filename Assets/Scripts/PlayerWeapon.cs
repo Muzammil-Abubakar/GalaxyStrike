@@ -5,6 +5,12 @@ public class PlayerWeapon : MonoBehaviour
 {
     [SerializeField] private RectTransform crosshair;
 
+    // The invisible point that the lasers will aim toward.
+    [SerializeField] private Transform targetPoint;
+
+    // How far in front of the camera the target point should be.
+    [SerializeField] private float targetDistance = 250f;
+
     private ParticleSystem[] weaponParticles;
 
     void Start()
@@ -32,6 +38,28 @@ public class PlayerWeapon : MonoBehaviour
 
         // Move the crosshair to the mouse position.
         crosshair.position = mousePosition;
+
+        // Move the target point to the mouse position in 3D space.
+        MoveTargetPoint();
+    }
+
+    private void MoveTargetPoint()
+    {
+        // Create a screen-space position using:
+        // X = mouse X
+        // Y = mouse Y
+        // Z = distance in front of the camera
+        Vector3 targetPointPosition = new Vector3(
+            Mouse.current.position.ReadValue().x,
+            Mouse.current.position.ReadValue().y,
+            targetDistance
+        );
+
+        // Convert the screen position into a world position.
+        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(targetPointPosition);
+
+        // Move our target point to that world position.
+        targetPoint.position = worldPosition;
     }
 
     public void OnFire(InputValue value)
