@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,11 +6,16 @@ public class PlayerWeapon : MonoBehaviour
 {
     [SerializeField] private RectTransform crosshair;
 
-    // The invisible point that the lasers will aim toward.
-    [SerializeField] private Transform targetPoint;
+    // Drag your Player Ship / Player Rig here.
+    // Its blue Z axis should point forward.
+    [SerializeField] private Transform aimReference;
 
-    // How far in front of the camera the target point should be.
-    [SerializeField] private float targetDistance = 250f;
+    // Maximum weapon movement from the ship's forward direction.
+    [SerializeField] private float horizontalLimit = 70f;
+    [SerializeField] private float verticalLimit = 30f;
+
+    // How far the crosshair ray reaches when it hits nothing.
+    [SerializeField] private float aimDistance = 1000f;
 
     private ParticleSystem[] weaponParticles;
 
@@ -20,10 +26,8 @@ public class PlayerWeapon : MonoBehaviour
 
     void Awake()
     {
-        // Find all Particle Systems under this object.
         weaponParticles = GetComponentsInChildren<ParticleSystem>();
 
-        // Turn both laser emissions off initially.
         foreach (ParticleSystem particle in weaponParticles)
         {
             var emission = particle.emission;
@@ -33,53 +37,141 @@ public class PlayerWeapon : MonoBehaviour
 
     void Update()
     {
-        // Get mouse position in screen space.
         Vector2 mousePosition = Mouse.current.position.ReadValue();
 
-        // Move the crosshair to the mouse position.
+        // Keep crosshair exactly on the mouse.
         crosshair.position = mousePosition;
 
-        // Move the target point to the mouse position in 3D space.
-        MoveTargetPoint();
-
-        // Aim the lasers toward the target point.
         AimLasers();
-    }
-
-    private void MoveTargetPoint()
-    {
-        // Create a screen-space position using:
-        // X = mouse X
-        // Y = mouse Y
-        // Z = distance in front of the camera
-        Vector3 targetPointPosition = new Vector3(
-            Mouse.current.position.ReadValue().x,
-            Mouse.current.position.ReadValue().y,
-            targetDistance
-        );
-
-        // Convert the screen position into a world position.
-        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(targetPointPosition);
-
-        // Move our target point to that world position.
-        targetPoint.position = worldPosition;
     }
 
     private void AimLasers()
     {
-        // Aim each laser individually at the target point.
+        // --------------------------------------------------
+        // 1. Find exactly where the crosshair is pointing.
+        // --------------------------------------------------
+
+        Ray ray = Camera.main.ScreenPointToRay(
+            Mouse.current.position.ReadValue()
+        );
+
+        Vector3 targetPoint = ray.GetPoint(aimDistance);
+
+        RaycastHit[] hits = Physics.RaycastAll(
+            ray,
+            aimDistance
+        );
+
+        // Find the closest valid hit that isn't our player.
+        float closestDistance = float.MaxValue;
+
+        foreach (RaycastHit hit in hits)
+        {
+            // Ignore anything belonging to the entire player hierarchy.
+            if (hit.transform == transform ||
+                hit.transform.IsChildOf(transform))
+            {
+                continue;
+            }
+
+            if (hit.distance < closestDistance)
+            {
+                closestDistance = hit.distance;
+                targetPoint = hit.point;
+            }
+        }
+
+        // --------------------------------------------------
+        // 2. Calculate target direction from the ship.
+        // --------------------------------------------------
+
+        Vector3 targetDirection =
+            targetPoint - aimReference.position;
+
+        if (targetDirection.sqrMagnitude < 0.0001f)
+        {
+            return;
+        }
+
+        targetDirection.Normalize();
+
+        // Convert world direction into the ship's local space.
+        Vector3 localDirection =
+            aimReference.InverseTransformDirection(targetDirection);
+
+        // --------------------------------------------------
+        // 3. Calculate LEFT / RIGHT angle.
+        // --------------------------------------------------
+
+        float horizontalAngle =
+            Mathf.Atan2(
+                localDirection.x,
+                localDirection.z
+            ) * Mathf.Rad2Deg;
+
+        // --------------------------------------------------
+        // 4. Calculate UP / DOWN angle.
+        // --------------------------------------------------
+
+        float horizontalDistance =
+            Mathf.Sqrt(
+                localDirection.x * localDirection.x +
+                localDirection.z * localDirection.z
+            );
+
+        float verticalAngle =
+            Mathf.Atan2(
+                localDirection.y,
+                horizontalDistance
+            ) * Mathf.Rad2Deg;
+
+        // --------------------------------------------------
+        // 5. Clamp independently.
+        // --------------------------------------------------
+
+        horizontalAngle = Mathf.Clamp(
+            horizontalAngle,
+            -horizontalLimit,
+            horizontalLimit
+        );
+
+        verticalAngle = Mathf.Clamp(
+            verticalAngle,
+            -verticalLimit,
+            verticalLimit
+        );
+
+        // --------------------------------------------------
+        // 6. Build the final constrained direction.
+        // --------------------------------------------------
+
+        Quaternion constrainedRotation =
+            Quaternion.Euler(
+                -verticalAngle,
+                horizontalAngle,
+                0f
+            );
+
+        Vector3 constrainedLocalDirection =
+            constrainedRotation * Vector3.forward;
+
+        // Convert back into world space.
+        Vector3 constrainedWorldDirection =
+            aimReference.TransformDirection(
+                constrainedLocalDirection
+            );
+
+        // --------------------------------------------------
+        // 7. Aim the lasers.
+        // --------------------------------------------------
+
         foreach (ParticleSystem laser in weaponParticles)
         {
-            // Direction from the laser to the target.
-            Vector3 fireDirection =
-                targetPoint.position - laser.transform.position;
-
-            // Convert the direction into a rotation.
-            Quaternion rotationToTarget =
-                Quaternion.LookRotation(fireDirection);
-
-            // Rotate the laser toward the target.
-            laser.transform.rotation = rotationToTarget;
+            laser.transform.rotation =
+                Quaternion.LookRotation(
+                    constrainedWorldDirection,
+                    aimReference.up
+                );
         }
     }
 
@@ -87,7 +179,6 @@ public class PlayerWeapon : MonoBehaviour
     {
         bool isFiring = value.isPressed;
 
-        // Toggle emission for both lasers.
         foreach (ParticleSystem particle in weaponParticles)
         {
             var emission = particle.emission;
@@ -95,3 +186,4 @@ public class PlayerWeapon : MonoBehaviour
         }
     }
 }
+
