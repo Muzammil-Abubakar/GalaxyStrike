@@ -433,6 +433,14 @@ PrefabInstance:
       propertyPath: damageTickInterval
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 5800014203172944265, guid: 157cb556c808c874daf2e7bf28cb5a66, type: 3}
+      propertyPath: laserCheckInterval
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5800014203172944265, guid: 157cb556c808c874daf2e7bf28cb5a66, type: 3}
+      propertyPath: laserDeathTimeMilliseconds
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 7716534792260407309, guid: 157cb556c808c874daf2e7bf28cb5a66, type: 3}
       propertyPath: m_LocalPosition.x
       value: 71.033325
