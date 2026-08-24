@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -19,9 +18,11 @@ public class Enemy : MonoBehaviour
 
     private float accumulatedLaserTime;
     private float laserCheckTimer;
-
     private bool laserHitThisInterval;
     private bool isDead;
+
+    // Scoreboard reference found once in Awake.
+    private Scoreboard scoreboard;
 
     private void Awake()
     {
@@ -30,6 +31,17 @@ public class Enemy : MonoBehaviour
 
         laserCheckInterval =
             Mathf.Max(laserCheckInterval, 0.001f);
+
+        // Find the scoreboard once when this enemy is initialized.
+        scoreboard = FindAnyObjectByType<Scoreboard>();
+
+        if (scoreboard == null)
+        {
+            Debug.LogWarning(
+                "[Enemy] No Scoreboard found in the scene.",
+                this
+            );
+        }
 
         if (enableDebugLogs)
         {
@@ -90,7 +102,6 @@ public class Enemy : MonoBehaviour
         if (laserHitThisInterval)
         {
             float checkTime = laserCheckInterval;
-
             accumulatedLaserTime += checkTime;
 
             if (enableDebugLogs)
@@ -138,6 +149,12 @@ public class Enemy : MonoBehaviour
         }
 
         isDead = true;
+
+        // Award 100 points for killing this enemy.
+        if (scoreboard != null)
+        {
+            scoreboard.IncreaseScore();
+        }
 
         if (enableDebugLogs)
         {
