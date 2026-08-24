@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4956286916403776187}
   - component: {fileID: 7679832090856089637}
   - component: {fileID: 6409847754765840165}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -147,7 +147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 627733329919346998}
   - component: {fileID: 4840213148101961445}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player Rig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +205,10 @@ GameObject:
   - component: {fileID: 7874027408452327662}
   - component: {fileID: 4008447522937485370}
   - component: {fileID: 12160469950330647}
-  m_Layer: 0
+  - component: {fileID: 6257708262287456563}
+  - component: {fileID: 8049100217072099130}
+  - component: {fileID: 640013019725666941}
+  m_Layer: 6
   m_Name: Player Ship
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,7 +292,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b612c13b70bfb0144a5fd68ddbe3b17f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeapon
-  weaponParticles: {fileID: 8648819142357598793}
+  crosshair: {fileID: 0}
+  aimReference: {fileID: 7182484072692517474}
+  horizontalLimit: 50
+  verticalLimit: 30
+  aimDistance: 1000
+--- !u!65 &6257708262287456563
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4363072865578759763}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.567224, y: 3.859736, z: 8.324622}
+  m_Center: {x: 0.15, y: 1.31, z: -0.41}
+--- !u!54 &8049100217072099130
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4363072865578759763}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &640013019725666941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4363072865578759763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe514ec026fd56342a2f696980644fa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CollisionHandler
 --- !u!1 &5117024516213805721
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,7 +368,7 @@ GameObject:
   - component: {fileID: 2877806993725740609}
   - component: {fileID: 8422857071476329662}
   - component: {fileID: 8961512730224520141}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Fighter_03_Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -390,7 +457,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6424866276774140555}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -465,6 +532,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Right Laser
       objectReference: {fileID: 0}
+    - target: {fileID: 8208854430398712613, guid: 1a2bc8211a0662145b480ab758ba2604, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -527,16 +598,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Left Laser
       objectReference: {fileID: 0}
+    - target: {fileID: 8208854430398712613, guid: 1a2bc8211a0662145b480ab758ba2604, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a2bc8211a0662145b480ab758ba2604, type: 3}
---- !u!198 &8648819142357598793 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 350512288472644974, guid: 1a2bc8211a0662145b480ab758ba2604, type: 3}
-  m_PrefabInstance: {fileID: 8996927885432389415}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8660912940020884282 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 354161835224046621, guid: 1a2bc8211a0662145b480ab758ba2604, type: 3}

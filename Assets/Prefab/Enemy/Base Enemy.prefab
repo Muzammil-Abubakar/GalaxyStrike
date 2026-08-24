@@ -67,7 +67,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9807b31bbe25416458feb77a7824b166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  laserDeathTimeMilliseconds: 500
+  laserCheckInterval: 0.2
   deathEffect: {fileID: 3774622074780687186, guid: 815ef12f0d440494f8a2381e9ad9d519, type: 3}
+  enableDebugLogs: 0
 --- !u!1 &2200636160443148097
 GameObject:
   m_ObjectHideFlags: 0

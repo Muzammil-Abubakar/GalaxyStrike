@@ -138,7 +138,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5622157425334586146, guid: 157cb556c808c874daf2e7bf28cb5a66, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7716534792260407309, guid: 157cb556c808c874daf2e7bf28cb5a66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -199,7 +199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5622157425334586146, guid: 157cb556c808c874daf2e7bf28cb5a66, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7716534792260407309, guid: 157cb556c808c874daf2e7bf28cb5a66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -559,24 +559,8 @@ PrefabInstance:
       value: Enemy - Twin Shot.2
       objectReference: {fileID: 0}
     - target: {fileID: 5800014203172944265, guid: 157cb556c808c874daf2e7bf28cb5a66, type: 3}
-      propertyPath: damagePerTick
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 5800014203172944265, guid: 157cb556c808c874daf2e7bf28cb5a66, type: 3}
       propertyPath: enableDebugLogs
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5800014203172944265, guid: 157cb556c808c874daf2e7bf28cb5a66, type: 3}
-      propertyPath: damageTickInterval
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5800014203172944265, guid: 157cb556c808c874daf2e7bf28cb5a66, type: 3}
-      propertyPath: laserCheckInterval
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5800014203172944265, guid: 157cb556c808c874daf2e7bf28cb5a66, type: 3}
-      propertyPath: laserDeathTimeMilliseconds
-      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 7716534792260407309, guid: 157cb556c808c874daf2e7bf28cb5a66, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1186,7 +1170,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5622157425334586146, guid: 8d10fbbb97b12254d85267b767a7e189, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7716534792260407309, guid: 8d10fbbb97b12254d85267b767a7e189, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1252,7 +1236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5622157425334586146, guid: 8d10fbbb97b12254d85267b767a7e189, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7716534792260407309, guid: 8d10fbbb97b12254d85267b767a7e189, type: 3}
       propertyPath: m_LocalPosition.x
