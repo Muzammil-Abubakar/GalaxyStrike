@@ -488,9 +488,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7182484072692517474}
     m_Modifications:
+    - target: {fileID: 350512288472644974, guid: 1a2bc8211a0662145b480ab758ba2604, type: 3}
+      propertyPath: CollisionModule.m_Bounce.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 350512288472644974, guid: 1a2bc8211a0662145b480ab758ba2604, type: 3}
+      propertyPath: CollisionModule.m_Dampen.scalar
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 354161835224046621, guid: 1a2bc8211a0662145b480ab758ba2604, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.67
+      value: 0.69
       objectReference: {fileID: 0}
     - target: {fileID: 354161835224046621, guid: 1a2bc8211a0662145b480ab758ba2604, type: 3}
       propertyPath: m_LocalPosition.y
@@ -554,9 +562,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7182484072692517474}
     m_Modifications:
+    - target: {fileID: 350512288472644974, guid: 1a2bc8211a0662145b480ab758ba2604, type: 3}
+      propertyPath: CollisionModule.m_Bounce.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 350512288472644974, guid: 1a2bc8211a0662145b480ab758ba2604, type: 3}
+      propertyPath: CollisionModule.m_Dampen.scalar
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 354161835224046621, guid: 1a2bc8211a0662145b480ab758ba2604, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.91
+      value: -0.58
       objectReference: {fileID: 0}
     - target: {fileID: 354161835224046621, guid: 1a2bc8211a0662145b480ab758ba2604, type: 3}
       propertyPath: m_LocalPosition.y
